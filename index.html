@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#171a1d" />
+  <title>Axian Research LLC | Powertrain Technologies & Software Development</title>
+  <link rel="icon" type="image/png" href="logo.png">
+  <style>
+    :root {
+      --ink: #171a1d;
+      --ink-soft: #22272b;
+      --paper: #f5f4f0;
+      --white: #fff;
+      --muted: #70777b;
+      --line: #dcdedb;
+      --accent: #7f0000;
+      --accent-dark: #630101;
+      --max: 1200px;
+      --radius: 2px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 86px; }
+    body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: var(--ink); background: var(--paper); line-height: 1.55; }
+    a { color: inherit; text-decoration: none; }
+    button, input, textarea { font: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    .wrap { width: min(var(--max), calc(100% - 48px)); margin-inline: auto; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 11px; text-transform: uppercase; letter-spacing: .16em; font-size: .72rem; font-weight: 750; }
+    .eyebrow::before { content: ""; width: 26px; height: 2px; background: var(--accent); display: inline-block; }
+    .site-header { position: sticky; z-index: 10; top: 0; background: rgba(245,244,240,.94); border-bottom: 1px solid rgba(23,26,29,.1); backdrop-filter: blur(14px); }
+    .nav { height: 78px; display: flex; align-items: center; justify-content: space-between; gap: 30px; }
+    .brand { display: inline-flex; align-items: center; gap: 12px; min-width: max-content; }
+    .brand-mark { height: 34px; width: 34px; display: grid; place-items: center; background: var(--ink); color: var(--accent); font-weight: 900; font-size: 1.05rem; clip-path: polygon(0 0, 100% 0, 100% 72%, 72% 100%, 0 100%); }
+    .brand-name { display: flex; flex-direction: column; line-height: 1.03; letter-spacing: .08em; }
+    .brand-name strong { font-size: .94rem; font-weight: 850; }
+    .brand-name small { margin-top: 5px; color: var(--muted); font-size: .59rem; letter-spacing: .21em; font-weight: 750; }
+    .nav-links { display: flex; align-items: center; gap: clamp(20px, 3.3vw, 42px); }
+    .nav-links a { font-size: .86rem; font-weight: 650; transition: color .2s ease; }
+    .nav-links a:hover { color: var(--accent-dark); }
+    .nav-links .nav-cta { padding: 11px 17px; background: var(--accent); color: var(--white); }
+    .nav-links .nav-cta:hover { color: var(--white); background: var(--accent-dark); }
+    .menu-toggle { display: none; border: 0; background: transparent; padding: 8px; color: var(--ink); cursor: pointer; }
+    .menu-toggle span { display: block; height: 2px; width: 24px; background: currentColor; margin: 5px 0; }
+
+    .hero { position: relative; overflow: hidden; background: var(--ink); color: var(--white); min-height: 620px; display: grid; align-items: center; }
+    .hero::before { content: ""; position: absolute; inset: 0; opacity: .22; background-image: linear-gradient(rgba(255,255,255,.12) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.12) 1px, transparent 1px); background-size: 52px 52px; mask-image: linear-gradient(90deg, black, transparent 75%); }
+    .hero::after { content: ""; position: absolute; width: min(68vw, 860px); aspect-ratio: 1; right: -10%; top: 50%; transform: translateY(-50%); border: 1px solid rgba(239,108,50,.42); border-radius: 50%; box-shadow: 0 0 0 52px rgba(239,108,50,.035), 0 0 0 104px rgba(239,108,50,.03), 0 0 0 156px rgba(239,108,50,.02); }
+    .hero-inner { position: relative; z-index: 1; display: grid; grid-template-columns: 1.08fr .92fr; align-items: center; gap: 35px; padding-block: 86px; }
+    .hero-copy { max-width: 680px; }
+    .hero .eyebrow { color: #d0d3d3; }
+    h1 { margin: 25px 0 25px; max-width: 690px; font-size: clamp(3rem, 6.1vw, 5.9rem); line-height: .98; letter-spacing: -.065em; font-weight: 790; }
+    h1 span { color: var(--accent); }
+    .hero-lead { color: #c7cbcb; font-size: clamp(1rem, 1.5vw, 1.18rem); max-width: 540px; line-height: 1.75; margin: 0 0 31px; }
+    .actions { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 12px; min-height: 48px; padding: 13px 19px; font-weight: 750; font-size: .85rem; border: 1px solid transparent; transition: transform .2s ease, background .2s ease, border-color .2s ease; cursor: pointer; }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary { background: var(--accent); color: var(--white); }
+    .btn-primary:hover { background: var(--accent-dark); }
+    .btn-outline { border-color: rgba(255,255,255,.32); color: var(--white); }
+    .btn-outline:hover { border-color: var(--white); }
+    .arrow { font-size: 1.1rem; line-height: 1; }
+    .hero-visual { position: relative; min-height: 380px; display: flex; align-items: center; justify-content: center; }
+    .blueprint { position: relative; width: min(100%, 445px); aspect-ratio: 1 / 1.04; border: 1px solid rgba(255,255,255,.18); background: linear-gradient(135deg, rgba(255,255,255,.035), transparent 50%), repeating-linear-gradient(0deg, transparent, transparent 41px, rgba(255,255,255,.07) 42px), repeating-linear-gradient(90deg, transparent, transparent 41px, rgba(255,255,255,.07) 42px); }
+    .blueprint svg { width: 100%; height: 100%; position: absolute; inset: 0; }
+    .visual-tag { position: absolute; left: -20px; bottom: 30px; padding: 14px 18px; background: var(--accent); color: white; font-size: .68rem; text-transform: uppercase; letter-spacing: .16em; font-weight: 800; }
+    .visual-index { position: absolute; top: 20px; right: 20px; color: #a5abad; font-size: .66rem; letter-spacing: .16em; writing-mode: vertical-rl; }
+    .hero-foot { position: absolute; bottom: 0; left: 0; right: 0; border-top: 1px solid rgba(255,255,255,.14); }
+    .hero-foot-inner { min-height: 58px; display: flex; justify-content: space-between; gap: 20px; align-items: center; color: #aab0b0; font-size: .68rem; letter-spacing: .11em; text-transform: uppercase; }
+    .hero-foot strong { color: var(--white); font-weight: 700; }
+
+    section { scroll-margin-top: 78px; }
+    .section { padding: 106px 0; }
+    .section-heading { display: grid; grid-template-columns: .8fr 1.2fr; gap: 50px; align-items: start; margin-bottom: 55px; }
+    .section-heading h2 { margin: 17px 0 0; font-size: clamp(2.2rem, 4vw, 3.8rem); line-height: 1.03; letter-spacing: -.055em; max-width: 460px; }
+    .section-heading p { margin: 12px 0 0; color: #626a6e; max-width: 630px; font-size: 1.03rem; line-height: 1.8; }
+    .about { background: var(--paper); }
+    .about-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: 72px; align-items: stretch; }
+    .about-panel { position: relative; overflow: hidden; min-height: 350px; padding: 34px; background: #e8e7e1; display: flex; flex-direction: column; justify-content: space-between; }
+    .about-panel::before { content: ""; position: absolute; width: 255px; height: 255px; border: 1px solid #b7bab5; border-radius: 50%; right: -42px; top: 45px; box-shadow: 0 0 0 30px #e8e7e1, 0 0 0 31px #c9cbc5, 0 0 0 63px #e8e7e1, 0 0 0 64px #c9cbc5; }
+    .about-panel::after { content: "A"; position: absolute; right: 35px; top: 70px; font-weight: 850; font-size: 13rem; line-height: 1; letter-spacing: -.1em; color: rgba(23,26,29,.06); }
+    .panel-top, .panel-bottom { position: relative; z-index: 1; }
+    .panel-top span { color: var(--muted); letter-spacing: .18em; font-size: .7rem; font-weight: 800; text-transform: uppercase; }
+    .panel-bottom strong { display: block; font-size: 1.45rem; max-width: 260px; letter-spacing: -.035em; line-height: 1.15; }
+    .panel-bottom small { display: block; margin-top: 12px; color: #666d70; font-size: .76rem; letter-spacing: .12em; text-transform: uppercase; }
+    .about-copy { display: flex; flex-direction: column; justify-content: center; }
+    .about-copy h3 { font-size: 1.65rem; line-height: 1.2; letter-spacing: -.04em; margin: 0 0 17px; max-width: 520px; }
+    .about-copy p { color: #636b6f; margin: 0 0 16px; }
+    .principles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 23px; padding-top: 24px; border-top: 1px solid var(--line); }
+    .principle strong { display: block; font-size: .83rem; margin-bottom: 5px; }
+    .principle span { color: var(--muted); font-size: .76rem; }
+
+    .projects { background: #e9e8e2; }
+    .projects .section-heading p { color: #5f6669; }
+    .project-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .project-card { display: flex; flex-direction: column; min-height: 335px; background: var(--paper); padding: 26px; border-top: 3px solid transparent; transition: border-color .2s ease, transform .2s ease, box-shadow .2s ease; }
+    .project-card:hover { transform: translateY(-4px); border-color: var(--accent); box-shadow: 0 16px 36px rgba(23,26,29,.07); }
+    .project-number { color: var(--accent-dark); font-weight: 850; letter-spacing: .12em; font-size: .73rem; }
+    .project-icon { width: 56px; height: 56px; margin: 26px 0 20px; display: grid; place-items: center; border: 1px solid #d6d8d2; color: var(--ink); }
+    .project-icon svg { width: 27px; height: 27px; stroke: currentColor; stroke-width: 1.6; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    .project-card h3 { margin: 0 0 12px; font-size: 1.3rem; letter-spacing: -.035em; }
+    .project-card p { margin: 0; color: #677074; font-size: .89rem; line-height: 1.7; }
+    .project-link { margin-top: auto; padding-top: 22px; display: inline-flex; align-items: center; gap: 9px; color: var(--ink); font-size: .78rem; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; }
+    .project-link span { color: var(--accent-dark); font-size: 1.05rem; }
+    .project-note { margin-top: 20px; color: #777e7f; font-size: .75rem; }
+
+    .team { background: var(--paper); }
+
+    .contact { background: var(--ink); color: var(--white); position: relative; overflow: hidden; }
+    .contact::after { content: ""; position: absolute; height: 520px; width: 520px; border: 1px solid rgba(239,108,50,.25); border-radius: 50%; right: -220px; bottom: -230px; box-shadow: 0 0 0 48px rgba(239,108,50,.025), 0 0 0 96px rgba(239,108,50,.02); }
+    .contact .eyebrow { color: #ccd0d0; }
+    .contact-grid { position: relative; z-index: 1; display: grid; grid-template-columns: .9fr 1.1fr; gap: 75px; }
+    .contact h2 { margin: 18px 0 23px; font-size: clamp(2.6rem, 5vw, 4.7rem); line-height: 1; letter-spacing: -.065em; max-width: 480px; }
+    .contact-intro { max-width: 440px; color: #b7bdbd; line-height: 1.8; }
+    .contact-details { margin-top: 38px; display: grid; gap: 21px; }
+    .contact-detail { display: flex; gap: 14px; align-items: flex-start; }
+    .detail-icon { flex: 0 0 36px; height: 36px; display: grid; place-items: center; color: var(--accent); border: 1px solid #454b4e; }
+    .detail-icon svg { width: 17px; height: 17px; stroke: currentColor; stroke-width: 1.8; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    .contact-detail small { display: block; color: #9da5a6; text-transform: uppercase; letter-spacing: .14em; font-weight: 750; font-size: .65rem; margin: 0 0 3px; }
+    .contact-detail strong { display: block; font-size: .91rem; font-weight: 650; }
+    .contact-form { background: #202427; border: 1px solid #383e41; padding: clamp(24px, 4vw, 40px); }
+    .form-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 15px; margin-bottom: 27px; }
+    .form-top h3 { margin: 0; font-size: 1.45rem; letter-spacing: -.035em; }
+    .form-top span { color: var(--accent); font-size: .7rem; font-weight: 800; letter-spacing: .11em; }
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+    .field { display: flex; flex-direction: column; gap: 8px; margin-bottom: 18px; }
+    .field label { color: #c0c6c6; font-size: .77rem; font-weight: 650; }
+    .field input, .field textarea { width: 100%; border: 1px solid #444b4e; border-radius: 0; background: #191d20; color: var(--white); outline: none; padding: 13px 14px; transition: border .2s ease; }
+    .field input:focus, .field textarea:focus { border-color: var(--accent); }
+    .field textarea { min-height: 120px; resize: vertical; }
+    .field input::placeholder, .field textarea::placeholder { color: #737b7d; }
+    .form-submit { width: 100%; border: 0; }
+    .form-help { color: #8e989a; font-size: .72rem; line-height: 1.6; margin: 14px 0 0; }
+    .site-footer { background: #111416; color: #90999b; }
+    .footer-inner { min-height: 86px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; font-size: .73rem; }
+    .footer-inner .brand { color: var(--white); }
+    .footer-inner .brand-mark { width: 28px; height: 28px; font-size: .9rem; }
+    .footer-inner .brand-name strong { font-size: .8rem; }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a:hover { color: var(--white); }
+    .form-status { display: none; margin-top: 13px; color: #d7dedc; font-size: .82rem; }
+    .form-status.show { display: block; }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+    @media (max-width: 900px) {
+      .hero-inner { grid-template-columns: 1fr .82fr; gap: 15px; }
+      h1 { font-size: clamp(3rem, 7vw, 4.8rem); }
+      .hero-visual { min-height: 320px; }
+      .about-grid, .contact-grid { gap: 36px; }
+      .section-heading { gap: 30px; }
+      .project-grid { gap: 13px; }
+      .project-card { padding: 22px; }
+    }
+    @media (max-width: 700px) {
+      .wrap { width: min(var(--max), calc(100% - 36px)); }
+      .nav { height: 70px; }
+      .menu-toggle { display: block; }
+      .nav-links { position: absolute; display: none; top: 70px; left: 0; right: 0; padding: 12px 18px 22px; background: var(--paper); border-bottom: 1px solid var(--line); flex-direction: column; align-items: stretch; gap: 0; }
+      .nav-links.open { display: flex; }
+      .nav-links a { padding: 13px 4px; }
+      .nav-links .nav-cta { text-align: center; margin-top: 8px; padding: 12px; }
+      .hero { min-height: auto; }
+      .hero-inner { grid-template-columns: 1fr; padding-top: 68px; padding-bottom: 90px; }
+      .hero-visual { min-height: 300px; margin-top: 8px; }
+      .blueprint { width: min(82%, 350px); }
+      .hero::after { width: 140vw; right: -65%; top: 65%; }
+      .hero-foot-inner { min-height: 53px; font-size: .58rem; letter-spacing: .06em; }
+      .hero-foot-inner span:last-child { text-align: right; }
+      .section { padding: 75px 0; }
+      .section-heading { grid-template-columns: 1fr; gap: 16px; margin-bottom: 35px; }
+      .section-heading h2 { max-width: 560px; }
+      .section-heading p { margin-top: 0; }
+      .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 30px; }
+      .about-panel { min-height: 280px; }
+      .principles { gap: 15px; }
+      .project-grid { grid-template-columns: 1fr; }
+      .project-card { min-height: 300px; }
+      .contact-grid { gap: 40px; }
+      .contact::after { right: -370px; }
+      .footer-inner { padding-block: 22px; }
+    }
+    @media (max-width: 430px) {
+      .brand-name strong { font-size: .82rem; }
+      h1 { font-size: 3.1rem; }
+      .hero-lead { font-size: .96rem; }
+      .visual-tag { left: -7px; bottom: 18px; }
+      .principles { grid-template-columns: 1fr; }
+      .field-row { grid-template-columns: 1fr; gap: 0; }
+      .footer-links { width: 100%; gap: 15px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap nav">
+      <a class="brand" href="#top" aria-label="Axian Research home">
+        <span class="brand-mark" aria-hidden="true">A</span>
+        <span class="brand-name"><strong>AXIAN</strong><small>RESEARCH</small></span>
+      </a>
+      <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="nav-links"><span></span><span></span><span></span></button>
+      <nav id="nav-links" class="nav-links" aria-label="Main navigation">
+        <a href="#about">About us</a>
+        <a href="#projects">Areas of research</a>
+        <a href="#team">Team members</a>
+        <a class="nav-cta" href="#contact">Contact us <span class="arrow">↗</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="wrap hero-inner">
+        <div class="hero-copy">
+          <div class="eyebrow">Research · Engineering · Development</div>
+          <h1 id="hero-title">Axian<br /><span>Research</span></h1>
+          <div class="actions">
+            <a class="btn btn-primary" href="#projects">Explore our projects <span class="arrow">↘</span></a>
+            <a class="btn btn-outline" href="#about">About Axian Research</a>
+          </div>
+        </div>
+        <div class="hero-visual" aria-label="Abstract technical blueprint illustration" role="img">
+          <div class="blueprint">
+            <span class="visual-index">AXIAN RESEARCH / 001</span>
+            <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <g fill="none" stroke="#d7dddc" stroke-opacity=".65" stroke-width="1.15">
+                <path d="M159 66 199 96 49 287 11 258Z"/>
+                <path d="M352 66 501 258 463 287 313 96Z"/>
+                <path d="M218 112 256 141 108 332 69 303Z"/>
+                <path d="M293 112 443 303 405 332 256 141Z"/>
+                <rect x="107" y="332" width="299" height="46"/>
+                <rect x="107" y="400" width="299" height="46"/>
+                <circle cx="256" cy="256" r="150" stroke-dasharray="3 8" stroke-opacity=".4"/>
+                <circle cx="256" cy="256" r="214" stroke-dasharray="2 10" stroke-opacity=".25"/>
+              </g>
+              <g fill="#ef6c32">
+              </g>
+              <g stroke="#c8cfce" stroke-opacity=".5" fill="none">
+                <path d="M28 490H280M28 499H180M456 22H206M456 13H305"/>
+              </g>
+            </svg>
+          </div>
+      </div>
+      <div class="hero-foot">
+        <div class="wrap hero-foot-inner"><span><strong>Curiosity</strong> with purpose</span><span>Pushing the limits in technology&nbsp; </span></div>
+      </div>
+    </section>
+
+    <section class="section about" id="about" aria-labelledby="about-title">
+      <div class="wrap">
+        <div class="section-heading">
+          <div><div class="eyebrow">About us</div><h2 id="about-title">Research with a practical mindset.</h2></div>          
+        </div>
+          <div class="about-copy">
+            <p>Axian Research is a research and development (R&D) company dedicated to transforming innovative ideas into practical, scalable solutions.</p>
+            <p>Founded in 2024 and headquartered in the United States, Axian Research operates in Hungary, combining international perspective with local engineering and research capabilities.</p>
+            <p>Our primary focus is the development of innovative, efficient, and affordable propulsion and powertrain technologies, alongside exploring software and computer solutions. We explore new approaches to engineering and technology with the goal of turning promising concepts into solutions that can be realistically implemented and scaled.</p>
+            <p>At Axian Research, we believe innovation should be simple, affordable, and practical.</p>
+            <div class="principles">
+              <div class="principle"><strong>Based in The EU</strong><span>Locally verified engineering.</span></div>
+              <div class="principle"><strong>Headquartered in The USA</strong><span>International presence.</span></div>
+              <div class="principle"><strong>Lead by young innovators</strong><span>A team of young professionals.</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section projects" id="projects" aria-labelledby="projects-title">
+      <div class="wrap">
+        <div class="section-heading">
+          <div><div class="eyebrow">Areas of Research</div><h2 id="projects-title">Powertrain and software development.</h2></div>
+        </div>
+        <div class="project-grid">
+          <article class="project-card">
+            <div class="project-number">01 / POWERTRAIN DEVELOPMENT</div>
+            <div class="project-icon" aria-hidden="true"><svg viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="11"/>
+            <polygon points="12 2,20 18,4 18"></svg></div>
+            <h3>Powertrain & propulsion systems</h3>
+            <p>Exploring and testing alternative powertrain and propulsion systems for on-road, seafaring, and aerial vehicles.</p>
+            <a class="project-link" href="#contact">Discuss a project <span>↗</span></a>
+          </article>
+          <article class="project-card">
+            <div class="project-number">02 / SOFTWARE DEVELOPMENT</div>
+            <div class="project-icon" aria-hidden="true"><svg viewBox="0 0 24 24">
+            <path d="M4 20V9l8-5 8 5v11"/><path d="M8 20v-6h8v6M2 20h20M8 9h.01M12 9h.01M16 9h.01"/></svg></div>
+            <h3>Personalized apps for companies</h3>
+            <p>In-house development of internal management and customer sales apps catered to the organisation's needs.</p>
+            <a class="project-link" href="#contact">Discuss a project <span>↗</span></a>
+          </article>
+          <article class="project-card">
+            <div class="project-number">03 / AI-IM INTEGRATION</div>
+            <div class="project-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
+<rect x="2.6525" y="4.875" width="18.75" height="15"/>
+<line x1="3.375" y1="12.375" x2="20.625" y2="12.375"/>
+<path d="m7.125 16.125v0m0-7.5v0m9.75 0h-4.5m4.5 7.5h-4.5"/>
+</svg></div>
+            <h3>Installation & validation</h3>
+            <p>Developing and integrating AI and IM systems made for specific areas of work.</p>
+            <a class="project-link" href="#contact">Discuss a project <span>↗</span></a>
+          </article>
+        </div>
+        <p class="project-note">Contact us for further information at info@axianresearch.eu.</p>
+      </div>
+    </section>
+
+    <section class="section about" id="team" aria-labelledby="about-title">
+      <div class="wrap">
+        <div class="section-heading">
+          <div><div class="eyebrow">Team Members</div><h2 id="about-title">Meet the people working at Axian Research.</h2></div>          
+        </div>
+          <div class="about-grid">
+            <img src="szglambamb.png" height="512px" width="512px">
+            <div class="about-copy">
+            <h1>Hardi Bálint Roland</h1>
+            <h2>Founder & CEO</h2>
+            </div>
+          </div>
+          <div class="about-grid">
+            <img src="zglabartyimp.png" height="512px" width="512px">
+            <div class="about-copy">
+            <h1>Szabó Martin</h1>
+            <h2>Lead Engineer</h2>
+            </div>
+          </div>
+          <div class="about-grid">
+            <img src="szplump.png" height="512px" width="512px">
+            <div class="about-copy">
+            <h1>Kertész Dávid</h1>
+            <h2>AI Integration & Research</h2>
+            </div>
+          </div>
+          <div class="about-grid">
+            <img src="szkumpszkump.png" height="512px" width="512px">
+            <div class="about-copy">
+            <h1>Szabó Barnabás</h1>
+            <h2>Research Assistant</h2>
+            </div>
+          </div>
+          <div class="about-grid">
+            <img src="zblimpp.png" height="512px" width="512px">
+            <div class="about-copy">
+            <h1>Ádám Roxána Veronika</h1>
+            <h2>Accountant</h2>
+            </div>
+          </div>
+          <div class="about-grid">
+            <img src="zglevi.png" height="512px" width="512px">
+            <div class="about-copy">
+            <h1>Holb Levente</h1>
+            <h2>Market Research Analyst, HR, CX, SD</h2>
+            </div>
+          </div>
+    </section>
+
+    <section class="section contact" id="contact" aria-labelledby="contact-title">
+      <div class="wrap contact-grid">
+        <div>
+          <div class="eyebrow">Contact</div>
+          <h2 id="contact-title">Let’s work on what’s next.</h2>
+          <p class="contact-intro">Have a research question, a technical challenge, or an idea to explore? Send a message and start the conversation.</p>
+          <div class="contact-details">
+            <div class="contact-detail">
+              <span class="detail-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="m3 7 9 6 9-6"/></svg></span>
+              <div><small>Email</small><strong>info@axianresearch.eu</strong></div>
+            </div>
+            <div class="contact-detail">
+              <span class="detail-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
+              <div><small>Location</small><strong>19713 Newark</strong></div>
+            </div>
+          </div>
+        </div>
+        <form class="contact-form" id="contact-form">
+          <div class="form-top"><h3>Send us a message</h3></div>
+          <div class="field-row">
+            <div class="field"><label for="name">Your name</label><input id="name" name="name" autocomplete="name" placeholder="Name" required /></div>
+            <div class="field"><label for="email">Email address</label><input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required /></div>
+          </div>
+          <div class="field"><label for="subject">Subject</label><input id="subject" name="subject" placeholder="How can we help?" required /></div>
+          <div class="field"><label for="message">Message</label><textarea id="message" name="message" placeholder="Tell us a little about your project..." required></textarea></div>
+          <button class="btn btn-primary form-submit" type="submit">Prepare email <span class="arrow">↗</span></button>
+          <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <a class="brand" href="#top" aria-label="Axian Research back to top"><span class="brand-mark" aria-hidden="true">A</span><span class="brand-name"><strong>AXIAN</strong><small>RESEARCH</small></span></a>
+      <span>© <span id="year"></span> Axian Research. All rights reserved.</span>
+      <div class="footer-links"><a href="#about">About us</a><a href="#projects">Areas of research</a><a href="#team">Team members<a/><a href="#contact">Contact</a></div>
+    </div>
+  </footer>
+
+  <script>
+    // Before publishing, replace this placeholder with the email address that should receive inquiries.
+    const CONTACT_EMAIL = "info@axianresearch.eu";
+
+    const menuButton = document.querySelector('.menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    menuButton.addEventListener('click', () => {
+      const isOpen = navLinks.classList.toggle('open');
+      menuButton.setAttribute('aria-expanded', String(isOpen));
+    });
+    navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      menuButton.setAttribute('aria-expanded', 'false');
+    }));
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    document.getElementById('contact-form').addEventListener('submit', (event) => {
+      event.preventDefault();
+      const status = document.getElementById('form-status');
+      if (CONTACT_EMAIL === 'info@axianresearch.eu') {
+        status.classList.add('show');
+        return;
+      }
+      const data = new FormData(event.currentTarget);
+      const subject = encodeURIComponent(data.get('subject'));
+      const body = encodeURIComponent(`Name: ${data.get('name')}\nEmail: ${data.get('email')}\n\n${data.get('message')}`);
+      window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
+      status.classList.add('show');
+    });
+  </script>
+</body>
+</html>

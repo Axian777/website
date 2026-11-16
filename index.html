@@ -105,6 +105,52 @@
     .project-note { margin-top: 20px; color: #777e7f; font-size: .75rem; }
 
     .team { background: var(--paper); }
+    /* Team member layout */
+.team-about {
+    display: grid;
+    grid-template-columns: 512px minmax(0, 1fr);
+    align-items: center;
+    gap: 35px;
+    margin-bottom: 20px;
+}
+
+/* Team member images */
+.team-about img {
+    display: block;
+    width: 100%;
+    max-width: 512px;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/* Team member text */
+.team-about .about-copy {
+    min-width: 0;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+    .team-about {
+        grid-template-columns: 1fr;
+        justify-items: center;
+        text-align: center;
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    .team-about img {
+        width: 100%;
+        max-width: 512px;
+        height: auto;
+        margin: 0 auto;
+    }
+
+    .team-about .about-copy h1 {    }
+
+    .team-about .about-copy h2 {    }
+}
 
     .contact { background: var(--ink); color: var(--white); position: relative; overflow: hidden; }
     .contact::after { content: ""; position: absolute; height: 520px; width: 520px; border: 1px solid rgba(239,108,50,.25); border-radius: 50%; right: -220px; bottom: -230px; box-shadow: 0 0 0 48px rgba(239,108,50,.025), 0 0 0 96px rgba(239,108,50,.02); }
@@ -313,42 +359,42 @@
         <div class="section-heading">
           <div><div class="eyebrow">Team Members</div><h2 id="about-title">Meet the people working at Axian Research.</h2></div>          
         </div>
-          <div class="about-grid">
+          <div class="team-about">
             <img src="szglambamb.png" height="512px" width="512px">
             <div class="about-copy">
             <h1>Hardi Bálint Roland</h1>
             <h2>Founder & CEO</h2>
             </div>
           </div>
-          <div class="about-grid">
+          <div class="team-about">
             <img src="zglabartyimp.png" height="512px" width="512px">
             <div class="about-copy">
             <h1>Szabó Martin</h1>
             <h2>Lead Engineer</h2>
             </div>
           </div>
-          <div class="about-grid">
+          <div class="team-about">
             <img src="szplump.png" height="512px" width="512px">
             <div class="about-copy">
             <h1>Kertész Dávid</h1>
             <h2>AI Integration & Research</h2>
             </div>
           </div>
-          <div class="about-grid">
+          <div class="team-about">
             <img src="szkumpszkump.png" height="512px" width="512px">
             <div class="about-copy">
             <h1>Szabó Barnabás</h1>
             <h2>Research Assistant</h2>
             </div>
           </div>
-          <div class="about-grid">
+          <div class="team-about">
             <img src="zblimpp.png" height="512px" width="512px">
             <div class="about-copy">
             <h1>Ádám Roxána Veronika</h1>
             <h2>Accountant</h2>
             </div>
           </div>
-          <div class="about-grid">
+          <div class="team-about">
             <img src="zglevi.png" height="512px" width="512px">
             <div class="about-copy">
             <h1>Holb Levente</h1>
